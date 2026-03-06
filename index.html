@@ -25,61 +25,130 @@
 
     *{box-sizing:border-box}
 
-    .legend, .cert-box{
-      position:absolute;
-      background:#fff;
-      padding:8px 10px;
-      border-radius:8px;
-      box-shadow:0 2px 8px rgba(0,0,0,.12);
-      font:14px/1.3 system-ui,Arial,sans-serif;
-      max-width:calc(100vw - 24px);
-    }
-
-    .cert-box{
-      bottom:12px;
-      left:12px;
-      z-index:1000;
-      min-width:190px;
-    }
-
-    .legend{
-      bottom:12px;
-      right:12px;
-      min-width:180px;
-      z-index:3000;
-    }
-
-    .cert-box input[type="checkbox"],
-    .legend input[type="checkbox"]{
-      width:14px;
-      height:14px;
-      margin-right:5px;
-      vertical-align:middle;
-    }
-
-    .search-box{
+    /* ===== TOPBAR ===== */
+    .topbar{
       position:absolute;
       top:12px;
+      left:12px;
       right:12px;
-      z-index:1500;
+      z-index:5000;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+      pointer-events:none;
+    }
+    .topbar > *{
+      pointer-events:auto;
+    }
+
+    .tb-btn{
+      border:1px solid #d8dde6;
       background:#fff;
-      padding:8px 10px;
-      border-radius:8px;
-      box-shadow:0 2px 8px rgba(0,0,0,.15);
-      font:14px system-ui,Arial,sans-serif;
-      width:280px;
-      max-width:calc(100vw - 24px);
+      color:#111827;
+      border-radius:12px;
+      padding:10px 12px;
+      font:600 14px/1 system-ui,Arial;
+      cursor:pointer;
+      box-shadow:0 8px 24px rgba(2,6,23,.12);
+    }
+    .tb-btn:hover{background:#fafafa}
+
+    .tb-search{
+      flex:1 1 240px;
+      min-width:160px;
+      max-width:430px;
+      border:1px solid #d8dde6;
+      background:#fff;
+      color:#111827;
+      border-radius:12px;
+      padding:10px 12px;
+      font:14px/1 system-ui,Arial;
+      outline:none;
+      box-shadow:0 8px 24px rgba(2,6,23,.12);
+    }
+    .tb-search::placeholder{color:#6b7280}
+
+    /* ===== PANELS ===== */
+    .panel{
+      position:absolute;
+      z-index:4900;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.10);
+      border-radius:16px;
+      box-shadow:0 18px 48px rgba(0,0,0,.20);
+      overflow:hidden;
+    }
+    .panel.hidden{display:none!important}
+
+    .panelHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 14px;
+      border-bottom:1px solid #eceff3;
+      background:#fff;
+    }
+
+    .panelTitle{
+      font:700 15px/1.2 system-ui,Arial;
+      color:#111827;
+    }
+
+    .panelClose{
+      border:1px solid #d8dde6;
+      background:#fff;
+      border-radius:10px;
+      padding:4px 10px;
+      cursor:pointer;
+      font:600 14px/1 system-ui,Arial;
+    }
+    .panelClose:hover{background:#fafafa}
+
+    .menuPanel{
+      top:64px;
+      left:12px;
+      width:min(430px, calc(100vw - 24px));
+      max-height:min(82vh, 860px);
+    }
+    .menuBody{
+      padding:14px;
+      overflow:auto;
+      max-height:calc(min(82vh, 860px) - 54px);
+    }
+
+    /* ===== BOXEN IM FILTER ===== */
+    .boxSection{
+      background:#fff;
+      border:1px solid #e7ebf0;
+      border-radius:14px;
+      padding:12px;
+      margin-bottom:12px;
+    }
+    .boxSection:last-child{margin-bottom:0}
+
+    .boxSectionTitle{
+      font:700 14px/1.2 system-ui,Arial;
+      margin-bottom:10px;
+      color:#111827;
+    }
+
+    .boxSection input[type="checkbox"]{
+      width:16px;
+      height:16px;
+      margin-right:6px;
+      vertical-align:middle;
     }
 
     .search-box input[type="text"],
     .search-box select{
       width:100%;
-      padding:7px 8px;
+      padding:9px 10px;
       border:1px solid #ccc;
-      border-radius:6px;
+      border-radius:8px;
       outline:none;
       box-sizing:border-box;
-      margin-left:0;
       font-size:14px;
     }
 
@@ -90,11 +159,11 @@
       line-height:1.25;
     }
 
-    .cert-box hr{
+    .boxSection hr{
       border:none;
       height:1px;
       background:#eee;
-      margin:6px 0;
+      margin:8px 0;
     }
 
     .country-dropdown{
@@ -108,14 +177,13 @@
       width:100%;
       background:#fff;
       border:1px solid #ccc;
-      border-radius:6px;
-      padding:7px 8px;
+      border-radius:8px;
+      padding:9px 10px;
       text-align:left;
       cursor:pointer;
       box-sizing:border-box;
       font-size:14px;
     }
-
     .country-dropdown-button:after{
       content:"▾";
       float:right;
@@ -128,11 +196,11 @@
       left:0;
       background:#fff;
       border:1px solid #ccc;
-      border-radius:6px;
+      border-radius:10px;
       box-shadow:0 2px 8px rgba(0,0,0,.12);
-      z-index:4000;
+      z-index:6000;
       display:none;
-      min-width:160px;
+      min-width:180px;
       max-height:260px;
       overflow-y:auto;
       padding:8px 10px;
@@ -155,12 +223,6 @@
       flex:0 0 auto;
     }
 
-    /* Start: alle Panels versteckt */
-    #panelSaegerestholz, #legendSaegerestholz,
-    #panelPellets, #legendPellets{
-      display:none;
-    }
-
     .leaflet-popup-content{
       margin:12px 14px;
       font-size:14px;
@@ -170,98 +232,50 @@
       border-radius:12px;
     }
 
-    /* Tablet */
-    @media (max-width: 900px){
-      .search-box{
-        width:290px;
-      }
-    }
-
-    /* Handy */
     @media (max-width: 700px){
-      .search-box{
-        top:10px;
-        left:10px;
-        right:10px;
-        width:auto;
-        max-width:none;
-      }
-
-      .cert-box{
-        left:10px;
-        right:10px;
-        bottom:180px;
-        width:auto;
-        max-width:none;
-        min-width:0;
-      }
-
-      .legend{
-        left:10px;
-        right:10px;
-        bottom:10px;
-        width:auto;
-        max-width:none;
-        min-width:0;
-      }
-
-      .search-box input[type="text"],
-      .search-box select,
-      .country-dropdown-button{
-        font-size:15px;
-      }
-    }
-
-    @media (max-width: 520px){
-      .search-box,
-      .cert-box,
-      .legend{
-        border-radius:10px;
-        box-shadow:0 2px 10px rgba(0,0,0,.16);
-      }
-
-      .search-box{
+      .topbar{
         top:8px;
         left:8px;
         right:8px;
-        padding:9px 10px;
+        gap:6px;
       }
 
-      .cert-box{
-        left:8px;
-        right:8px;
-        bottom:205px;
-        padding:9px 10px;
+      .tb-btn{
+        padding:10px 11px;
+        border-radius:11px;
+        font-size:13px;
       }
 
-      .legend{
+      .tb-search{
+        max-width:none;
+        flex:1 1 100%;
+        order:3;
+        font-size:16px;
+        padding:10px 12px;
+      }
+
+      .menuPanel{
+        top:94px;
         left:8px;
-        right:8px;
-        bottom:8px;
-        padding:9px 10px;
+        width:calc(100vw - 16px);
+        max-height:calc(100vh - 110px);
+      }
+
+      .menuBody{
+        max-height:calc(100vh - 164px);
       }
 
       .search-box input[type="text"],
       .search-box select,
       .country-dropdown-button{
         font-size:16px;
-        padding:9px 10px;
       }
+    }
 
-      .search-hint{
-        font-size:12px;
-      }
-
-      .cert-box,
-      .legend{
-        font-size:13px;
-      }
-
-      .cert-box input[type="checkbox"],
-      .legend input[type="checkbox"],
-      .country-dropdown-menu label input[type="checkbox"]{
-        width:16px;
-        height:16px;
+    @media (max-width: 520px){
+      .tb-btn,
+      .panelClose{
+        min-height:38px;
       }
 
       .country-dropdown-menu{
@@ -270,101 +284,115 @@
         max-width:100%;
       }
     }
-
-    @media (max-width: 390px){
-      .cert-box{
-        bottom:220px;
-      }
-    }
   </style>
 </head>
 <body>
 
 <div id="map"></div>
 
-<!-- Suche + Länderfilter + Unit -->
-<div class="search-box">
-  🔍 <input type="text" id="searchInput" placeholder="Firma, Kunde oder Ort/Adresse suchen…"/>
-  <div class="search-hint" id="searchHint">Wähle zuerst eine Unit.</div>
+<!-- TOPBAR -->
+<div class="topbar">
+  <button class="tb-btn" id="toggleMenuBtn" type="button">☰ Filter</button>
+  <input class="tb-search" type="text" id="searchInput" placeholder="Firma, Kunde oder Ort/Adresse suchen…"/>
+</div>
 
-  <b style="display:block;margin-top:10px;">Land / Länder filtern</b>
-  <div class="country-dropdown" id="countryDropdown">
-    <div class="country-dropdown-button" id="countryDropdownBtn">Alle Länder</div>
-    <div class="country-dropdown-menu" id="countryDropdownMenu">
-      <label><input type="checkbox" class="countryChk" value="all" checked> Alle</label>
-      <label><input type="checkbox" class="countryChk" value="be"> Belgien</label>
-      <label><input type="checkbox" class="countryChk" value="dk"> Dänemark</label>
-      <label><input type="checkbox" class="countryChk" value="de"> Deutschland</label>
-      <label><input type="checkbox" class="countryChk" value="ee"> Estland</label>
-      <label><input type="checkbox" class="countryChk" value="fi"> Finnland</label>
-      <label><input type="checkbox" class="countryChk" value="fr"> Frankreich</label>
-      <label><input type="checkbox" class="countryChk" value="it"> Italien</label>
-      <label><input type="checkbox" class="countryChk" value="lv"> Lettland</label>
-      <label><input type="checkbox" class="countryChk" value="lt"> Litauen</label>
-      <label><input type="checkbox" class="countryChk" value="nl"> Niederlande</label>
-      <label><input type="checkbox" class="countryChk" value="at"> Österreich</label>
-      <label><input type="checkbox" class="countryChk" value="pl"> Polen</label>
-      <label><input type="checkbox" class="countryChk" value="se"> Schweden</label>
-      <label><input type="checkbox" class="countryChk" value="ch"> Schweiz</label>
-      <label><input type="checkbox" class="countryChk" value="sk"> Slowakei</label>
-      <label><input type="checkbox" class="countryChk" value="cz"> Tschechien</label>
-      <label><input type="checkbox" class="countryChk" value="gb"> United Kingdom</label>
-    </div>
+<!-- FILTER PANEL -->
+<div class="panel menuPanel hidden" id="menuPanel">
+  <div class="panelHead">
+    <div class="panelTitle">Filter & Einstellungen</div>
+    <button class="panelClose" id="closeMenuBtn" type="button">✕</button>
   </div>
 
-  <b style="display:block;margin-top:10px;">Unit</b>
-  <select id="unitSelect">
-    <option value="" selected>Bitte auswählen…</option>
-    <option value="pellets">Pellets</option>
-    <option value="saegerestholz">Sägerestholz</option>
-  </select>
-</div>
+  <div class="menuBody">
 
-<!-- ====================== SÄGERESTHOLZ PANEL ====================== -->
-<div class="cert-box" id="panelSaegerestholz">
-  <b>Zertifikate</b><br>
-  <label><input type="checkbox" id="chkSURE" checked> SURE</label><br>
-  <label><input type="checkbox" id="chkPEFC" checked> PEFC</label><br>
-  <label><input type="checkbox" id="chkOhneZert" checked> Kein Zertifikat</label>
-  <hr>
-  <b>Produkt</b><br>
-  <label><input type="checkbox" id="chkHackschnitzel" checked> Hackschnitzel</label><br>
-  <label><input type="checkbox" id="chkSaegespaene" checked> Sägespäne</label><br>
-  <label><input type="checkbox" id="chkSiebmaterial" checked> Siebmaterial</label>
-</div>
+    <!-- Suche + Länderfilter + Unit -->
+    <div class="boxSection search-box">
+      <div class="boxSectionTitle">Suche & Auswahl</div>
+      <div class="search-hint" id="searchHint">Wähle zuerst eine Unit.</div>
 
-<div class="legend" id="legendSaegerestholz">
-  <b>Filter Farben</b><br>
-  <label><input type="checkbox" id="chkGruen" checked> 🟢 ≤ 260 €</label><br>
-  <label><input type="checkbox" id="chkOrange" checked> 🟠 260–285 €</label><br>
-  <label><input type="checkbox" id="chkRot" checked> 🔴 ≥ 285 €</label><br>
-  <label><input type="checkbox" id="chkGrau" checked> ⚪ kein Preis</label><br>
-  <label><input type="checkbox" id="chkKunden" checked> 🔷 Pelletwerk</label>
-</div>
+      <b style="display:block;margin-top:10px;">Land / Länder filtern</b>
+      <div class="country-dropdown" id="countryDropdown">
+        <div class="country-dropdown-button" id="countryDropdownBtn">Alle Länder</div>
+        <div class="country-dropdown-menu" id="countryDropdownMenu">
+          <label><input type="checkbox" class="countryChk" value="all" checked> Alle</label>
+          <label><input type="checkbox" class="countryChk" value="be"> Belgien</label>
+          <label><input type="checkbox" class="countryChk" value="dk"> Dänemark</label>
+          <label><input type="checkbox" class="countryChk" value="de"> Deutschland</label>
+          <label><input type="checkbox" class="countryChk" value="ee"> Estland</label>
+          <label><input type="checkbox" class="countryChk" value="fi"> Finnland</label>
+          <label><input type="checkbox" class="countryChk" value="fr"> Frankreich</label>
+          <label><input type="checkbox" class="countryChk" value="it"> Italien</label>
+          <label><input type="checkbox" class="countryChk" value="lv"> Lettland</label>
+          <label><input type="checkbox" class="countryChk" value="lt"> Litauen</label>
+          <label><input type="checkbox" class="countryChk" value="nl"> Niederlande</label>
+          <label><input type="checkbox" class="countryChk" value="at"> Österreich</label>
+          <label><input type="checkbox" class="countryChk" value="pl"> Polen</label>
+          <label><input type="checkbox" class="countryChk" value="se"> Schweden</label>
+          <label><input type="checkbox" class="countryChk" value="ch"> Schweiz</label>
+          <label><input type="checkbox" class="countryChk" value="sk"> Slowakei</label>
+          <label><input type="checkbox" class="countryChk" value="cz"> Tschechien</label>
+          <label><input type="checkbox" class="countryChk" value="gb"> United Kingdom</label>
+        </div>
+      </div>
 
-<!-- ====================== PELLETS PANEL ====================== -->
-<div class="cert-box" id="panelPellets">
-  <b>Zertifikate & Sackware</b><br>
-  <label><input type="checkbox" id="p_chkEnPlus" checked> EnPlus</label><br>
-  <label><input type="checkbox" id="p_chkDINplus" checked> DINplus</label><br>
-  <label><input type="checkbox" id="p_chkSURE" checked> SURE</label><br>
-  <label><input type="checkbox" id="p_chkCPP" checked> CPP</label><br>
-  <label><input type="checkbox" id="p_chkOhneZert" checked> Kein Zertifikat</label>
-  <hr>
-  <b>Sackware</b><br>
-  <label><input type="checkbox" id="p_chkSackFireflies"> FireFlies</label><br>
-  <label><input type="checkbox" id="p_chkSack15kg"> 15 kg</label>
-</div>
+      <b style="display:block;margin-top:10px;">Unit</b>
+      <select id="unitSelect">
+        <option value="" selected>Bitte auswählen…</option>
+        <option value="pellets">Pellets</option>
+        <option value="saegerestholz">Sägerestholz</option>
+      </select>
+    </div>
 
-<div class="legend" id="legendPellets">
-  <b>Filter Farben</b><br>
-  <label><input type="checkbox" id="p_chkGruen" checked> 🟢 ≤ 260 €</label><br>
-  <label><input type="checkbox" id="p_chkOrange" checked> 🟠 260–285 €</label><br>
-  <label><input type="checkbox" id="p_chkRot" checked> 🔴 ≥ 285 €</label><br>
-  <label><input type="checkbox" id="p_chkGrau" checked> ⚪ kein Preis</label><br>
-  <label><input type="checkbox" id="p_chkKunden" checked> 🔷 Pellethändler</label><br>
-  <label><input type="checkbox" id="p_chkSackKunden" checked> 🟣 Sackwaren Händler</label><br>
-  <label><input type="checkbox" id="p_chkSonstigeKunden" checked> 🔶 Sonstige Kunden</label>
+    <!-- ====================== SÄGERESTHOLZ PANEL ====================== -->
+    <div class="boxSection" id="panelSaegerestholz">
+      <div class="boxSectionTitle">Sägerestholz</div>
+      <b>Zertifikate</b><br>
+      <label><input type="checkbox" id="chkSURE" checked> SURE</label><br>
+      <label><input type="checkbox" id="chkPEFC" checked> PEFC</label><br>
+      <label><input type="checkbox" id="chkOhneZert" checked> Kein Zertifikat</label>
+      <hr>
+      <b>Produkt</b><br>
+      <label><input type="checkbox" id="chkHackschnitzel" checked> Hackschnitzel</label><br>
+      <label><input type="checkbox" id="chkSaegespaene" checked> Sägespäne</label><br>
+      <label><input type="checkbox" id="chkSiebmaterial" checked> Siebmaterial</label>
+    </div>
+
+    <div class="boxSection" id="legendSaegerestholz">
+      <div class="boxSectionTitle">Filter Farben</div>
+      <label><input type="checkbox" id="chkGruen" checked> 🟢 ≤ 260 €</label><br>
+      <label><input type="checkbox" id="chkOrange" checked> 🟠 260–285 €</label><br>
+      <label><input type="checkbox" id="chkRot" checked> 🔴 ≥ 285 €</label><br>
+      <label><input type="checkbox" id="chkGrau" checked> ⚪ kein Preis</label><br>
+      <label><input type="checkbox" id="chkKunden" checked> 🔷 Pelletwerk</label>
+    </div>
+
+    <!-- ====================== PELLETS PANEL ====================== -->
+    <div class="boxSection" id="panelPellets">
+      <div class="boxSectionTitle">Pellets</div>
+      <b>Zertifikate & Sackware</b><br>
+      <label><input type="checkbox" id="p_chkEnPlus" checked> EnPlus</label><br>
+      <label><input type="checkbox" id="p_chkDINplus" checked> DINplus</label><br>
+      <label><input type="checkbox" id="p_chkSURE" checked> SURE</label><br>
+      <label><input type="checkbox" id="p_chkCPP" checked> CPP</label><br>
+      <label><input type="checkbox" id="p_chkOhneZert" checked> Kein Zertifikat</label>
+      <hr>
+      <b>Sackware</b><br>
+      <label><input type="checkbox" id="p_chkSackFireflies"> FireFlies</label><br>
+      <label><input type="checkbox" id="p_chkSack15kg"> 15 kg</label>
+    </div>
+
+    <div class="boxSection" id="legendPellets">
+      <div class="boxSectionTitle">Filter Farben</div>
+      <label><input type="checkbox" id="p_chkGruen" checked> 🟢 ≤ 260 €</label><br>
+      <label><input type="checkbox" id="p_chkOrange" checked> 🟠 260–285 €</label><br>
+      <label><input type="checkbox" id="p_chkRot" checked> 🔴 ≥ 285 €</label><br>
+      <label><input type="checkbox" id="p_chkGrau" checked> ⚪ kein Preis</label><br>
+      <label><input type="checkbox" id="p_chkKunden" checked> 🔷 Pellethändler</label><br>
+      <label><input type="checkbox" id="p_chkSackKunden" checked> 🟣 Sackwaren Händler</label><br>
+      <label><input type="checkbox" id="p_chkSonstigeKunden" checked> 🔶 Sonstige Kunden</label>
+    </div>
+
+  </div>
 </div>
 
 <script>
@@ -385,7 +413,6 @@ function colorForPrice(p, keinPreis) {
   return "red";
 }
 
-// Ländername -> country_code (für Filter ohne Reverse-Geocode)
 function countryCodeFromLand(landRaw){
   const s = String(landRaw||"").toLowerCase().trim();
   if (!s) return "";
@@ -409,7 +436,6 @@ function countryCodeFromLand(landRaw){
   return "";
 }
 
-// ---- LAT/LON aus Spalte R/S (18/19) oder Header (lat/lon) holen ----
 function parseFloatSmart(v){
   const n = parseFloat(String(v ?? "").replace(",", ".").trim());
   return isFinite(n) ? n : NaN;
@@ -530,6 +556,36 @@ const ortIcon = L.divIcon({
 });
 
 /* =========================================================
+   PANEL TOGGLE
+========================================================= */
+
+const menuPanel = document.getElementById("menuPanel");
+const toggleMenuBtn = document.getElementById("toggleMenuBtn");
+const closeMenuBtn = document.getElementById("closeMenuBtn");
+
+function openMenuPanel(){
+  menuPanel.classList.remove("hidden");
+}
+function closeMenuPanel(){
+  menuPanel.classList.add("hidden");
+  const menu = document.getElementById("countryDropdownMenu");
+  if(menu) menu.style.display = "none";
+}
+function toggleMenuPanel(){
+  menuPanel.classList.toggle("hidden");
+}
+
+toggleMenuBtn.addEventListener("click", toggleMenuPanel);
+closeMenuBtn.addEventListener("click", closeMenuPanel);
+
+document.addEventListener("click", (e)=>{
+  const insideMenu = menuPanel.contains(e.target);
+  const insideTopbar = e.target.closest(".topbar");
+  if(insideMenu || insideTopbar) return;
+  closeMenuPanel();
+});
+
+/* =========================================================
    Länderfilter UI
 ========================================================= */
 
@@ -553,7 +609,8 @@ function updateCountryButtonLabel() {
     btn.textContent = selected.map(c => names[c] || c.toUpperCase()).join(", ");
   }
 }
-document.getElementById("countryDropdownBtn").addEventListener("click", () => {
+document.getElementById("countryDropdownBtn").addEventListener("click", (e) => {
+  e.stopPropagation();
   const menu = document.getElementById("countryDropdownMenu");
   menu.style.display = (menu.style.display === "block") ? "none" : "block";
 });
@@ -639,6 +696,7 @@ document.getElementById("unitSelect").addEventListener("change", async (e) => {
 
   try{
     await currentUnit.init();
+    closeMenuPanel();
   }catch(err){
     console.error(err);
     alert("Fehler beim Laden der Unit. Konsole (F12) anschauen.");
@@ -656,13 +714,13 @@ document.getElementById("searchInput").addEventListener("keydown", async (e) => 
   }
   try{
     await currentUnit.searchOrGeocode(q);
+    closeMenuPanel();
   }catch(err){
     console.error(err);
     alert("Fehler bei Suche/Geocoding.");
   }
 });
 
-// Klick neben Route => Route weg + Auswahl reset
 map.on('click', (e) => {
   const t = e.originalEvent && e.originalEvent.target;
   if (t && t.closest) {
